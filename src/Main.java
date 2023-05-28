@@ -6,9 +6,24 @@ public class Main {
         Scanner in = new Scanner(System.in);   //Активировать сканер ввода? ---Изучить получше---
         System.out.println("Введите задачу. Разделите числа и операцию пробелами.");   //Инструкция при запуске
         String input = in.nextLine();   //Ввод запроса
-        String [] taskElements = input.split(" ");   // Разделить запрос в местах пробелов
+        String result = calc(input);
+        System.out.println(result);
+    }
 
-        boolean calcError = false;   //Показатель наличия ошибок
+    public static int calculator(byte num1, char operation, byte num2){
+
+        return switch (operation) {
+            case '+' -> num1 + num2;
+            case '-' -> num1 - num2;
+            case '*' -> num1 * num2;
+            case '/' -> num1 / num2;
+            default ->
+                    throw new IllegalArgumentException("ОШИБКА! Калькулятор должен принимать только операторы +, -, *, /.");
+        };
+    }
+
+    public static String calc(String input) throws ThrowsException {
+        String [] taskElements = input.split(" ");   // Разделить запрос в местах пробелов
 
         if (taskElements.length < 3) {
             throw new IllegalArgumentException("ОШИБКА! Задача должна быть следующего вида: число, оператор (+, -, /, *), число.");
@@ -118,7 +133,7 @@ public class Main {
 
         if (roman == 1) {
             throw new ThrowsException("ОШИБКА! Оба числа должны быть либо арабскими либо римскими.");
-        }   //Проверка, чтобы оба числа были целыми
+        }   //Проверка
 
 
         // Конец страшной части с римскими цифрами
@@ -143,9 +158,8 @@ public class Main {
 
         String result = String.valueOf(calculator((byte) num1, operation, (byte) num2));   //Присвоить "result" результат работы "calculator"
 
-        if (!calcError && roman != 2) {
-             System.out.println(result);   //Вывести результат
-        } else if (!calcError && roman == 2) {
+        if (roman != 2) {
+        } else if (roman == 2) {
 
             if ( Integer.parseInt(result) < 1 ) {
                 throw new IllegalArgumentException("ОШИБКА! Результат римской вариации задачи не может быть меньше 1");
@@ -200,24 +214,8 @@ public class Main {
                 case "100" -> result = "C";
             }   // Переводим в римсий вариант арабское число
 
-            System.out.println(result);   //Вывести результат в римском варианте
-
         }
-        else throw new ThrowsException("Произошла ошибка");   //Если произошла ошибка
-
-
+        //Конец калькулятора
+        return result;
     }
-
-    public static int calculator(byte num1, char operation, byte num2){
-
-        return switch (operation) {
-            case '+' -> num1 + num2;
-            case '-' -> num1 - num2;
-            case '*' -> num1 * num2;
-            case '/' -> num1 / num2;
-            default ->
-                    throw new IllegalArgumentException("ОШИБКА! Калькулятор должен принимать только операторы +, -, *, /.");
-        };
-    }    //Конец калькулятора
-
 }
